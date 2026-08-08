@@ -171,7 +171,7 @@ Love & Laughter 💕`
 
               {/* More body text */}
               <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                Keep being your authentic self because that's what makes you 
+                Keep being your authentic self because that&apos;s what makes you 
                 truly beautiful. The world needs more people like you! 🌟
               </p>
 
@@ -214,7 +214,7 @@ Love & Laughter 💕`
                       ✨ Happy Birthday! ✨
                     </p>
                     <p className="text-lg md:text-xl text-gray-700 font-semibold">
-                      You're AMAZING! 
+                      You&apos;re AMAZING! 
                       <br/>
                       Love you so much! 💕
                     </p>
