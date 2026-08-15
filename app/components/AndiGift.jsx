@@ -303,6 +303,7 @@ export default function AndiGift() {
           .andi-header { text-align: center; }
           .andi-header-stars { }
           .andi-header-rule { margin: 0 auto; }
+          .andi-celebrate-gif { width: 64px !important; }
         }
 
         /* ===== floating toolbar: solid on mobile, never wraps ===== */
@@ -539,6 +540,12 @@ export default function AndiGift() {
               className="andi-header"
             >
               <div className="andi-header-stars" style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6 }}>✦ ✦ ✦</div>
+              <img
+                src="/celebrate.gif"
+                alt="celebrating penguin"
+                className="andi-celebrate-gif"
+                style={{ width: 90, marginBottom: 6 }}
+              />
               <h2 className="andi-title" style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, margin: '0 0 10px 0' }}>
                 for andi
               </h2>
