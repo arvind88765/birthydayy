@@ -120,6 +120,7 @@ export default function AndiGift() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: '#05060c', overflow: 'hidden', fontFamily: 'Georgia, serif' }}>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
         @keyframes andi-twinkle {
           0%,100% { opacity: var(--minop); transform: scale(1); }
           50% { opacity: 1; transform: scale(1.3); }
@@ -173,11 +174,11 @@ export default function AndiGift() {
       >
         <h1
           style={{
-            fontSize: 'clamp(2.4rem, 8vw, 4.5rem)',
-            fontStyle: 'italic',
-            fontWeight: 400,
-            margin: '0 0 10px 0',
-            letterSpacing: '0.03em',
+            fontFamily: "'Cinzel Decorative', serif",
+            fontSize: 'clamp(2rem, 7vw, 3.6rem)',
+            fontWeight: 700,
+            margin: '0 0 14px 0',
+            letterSpacing: '0.04em',
             textShadow: '0 0 24px rgba(246,242,231,0.35), 0 0 2px rgba(246,242,231,0.6)',
             animation: 'andi-fadein 1.4s ease forwards',
           }}
@@ -186,9 +187,9 @@ export default function AndiGift() {
         </h1>
         <p
           style={{
-            fontSize: 'clamp(0.95rem, 2.6vw, 1.2rem)',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
+            fontFamily: "'Caveat', cursive",
+            fontSize: 'clamp(1.3rem, 4vw, 1.9rem)',
+            letterSpacing: '0.02em',
             color: '#c9c3b4',
             margin: '0 0 60px 0',
             animation: 'andi-fadein 1.4s ease forwards',
@@ -202,9 +203,9 @@ export default function AndiGift() {
           className="andi-btn"
           onClick={openNote}
           style={{
-            fontFamily: 'Georgia, serif',
-            fontStyle: 'italic',
-            fontSize: '1.1rem',
+            fontFamily: "'Caveat', cursive",
+            fontWeight: 700,
+            fontSize: '1.4rem',
             padding: '16px 38px',
             borderRadius: 50,
             border: '1px solid rgba(246,242,231,0.5)',
@@ -296,63 +297,128 @@ export default function AndiGift() {
               />
             ))}
 
-            <h2 style={{ fontStyle: 'italic', fontSize: '1.8rem', textAlign: 'center', margin: '0 0 6px 0' }}>
+            <h2
+              style={{
+                fontFamily: "'Cinzel Decorative', serif",
+                fontSize: '1.7rem',
+                fontWeight: 700,
+                textAlign: 'center',
+                margin: '0 0 6px 0',
+              }}
+            >
               for andi ✦
             </h2>
             <div style={{ width: 120, height: 1, background: '#2b1c10', opacity: 0.3, margin: '0 auto 26px' }} />
 
-            <div
-              contentEditable
-              suppressContentEditableWarning
-              spellCheck={false}
-              style={{ fontSize: '1.05rem', lineHeight: 1.85, textAlign: 'left', outline: 'none', whiteSpace: 'pre-wrap' }}
-            >
-              {`Hey andi,\n\nJust a little corner of the internet made for you. Click on the picture squares below to drop in your own photos, and click anywhere in this text to rewrite it exactly how you want.\n\nHere's to you — happy birthday, and here's a small smtg from my side.`}
-            </div>
-
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '22px 0', justifyContent: 'center' }}>
-              {slots.map((slot) => (
+            {/* text with images floated inside it, like a scrapbook page */}
+            <div style={{ overflow: 'hidden' }}>
+              {slots[0] && (
                 <label
-                  key={slot.id}
                   className="andi-imgSlot"
-                  style={{
-                    width: 130,
-                    height: 130,
-                    border: '2px dashed rgba(43,28,16,0.35)',
-                    borderRadius: 4,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    fontSize: '0.75rem',
-                    color: 'rgba(43,28,16,0.55)',
-                    cursor: 'pointer',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundImage: slot.img ? `url(${slot.img})` : undefined,
-                    position: 'relative',
-                    transform: `rotate(${slot.rot}deg)`,
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
-                    overflow: 'hidden',
-                    transition: 'transform 0.2s',
-                  }}
+                  style={{ ...floatSlotStyle(slots[0], 'left'), float: 'left', marginRight: 18 }}
                 >
-                  {!slot.img && <span style={{ padding: 6 }}>+ photo</span>}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleFile(slot.id, e.target.files[0])}
-                    style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }}
-                  />
+                  {!slots[0].img && <span style={{ padding: 6 }}>+ photo</span>}
+                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[0].id, e.target.files[0])} style={fileInputStyle} />
                 </label>
-              ))}
+              )}
+
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '1.3rem',
+                  lineHeight: 1.9,
+                  textAlign: 'left',
+                  outline: 'none',
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {`Hey andi,\n\nJust a little corner of the internet made for you.`}
+              </div>
+
+              {slots[1] && (
+                <label
+                  className="andi-imgSlot"
+                  style={{ ...floatSlotStyle(slots[1], 'right'), float: 'right', marginLeft: 18, marginTop: 20 }}
+                >
+                  {!slots[1].img && <span style={{ padding: 6 }}>+ photo</span>}
+                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[1].id, e.target.files[0])} style={fileInputStyle} />
+                </label>
+              )}
+
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontStyle: 'italic',
+                  fontSize: '1.3rem',
+                  lineHeight: 1.9,
+                  textAlign: 'left',
+                  outline: 'none',
+                  whiteSpace: 'pre-wrap',
+                  marginTop: 16,
+                }}
+              >
+                {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
+              </div>
+
+              {slots[2] && (
+                <label
+                  className="andi-imgSlot"
+                  style={{ ...floatSlotStyle(slots[2], 'left'), float: 'left', borderRadius: '50%', marginRight: 18, marginTop: 20 }}
+                >
+                  {!slots[2].img && <span style={{ padding: 6 }}>+ photo</span>}
+                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[2].id, e.target.files[0])} style={fileInputStyle} />
+                </label>
+              )}
+
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '1.3rem',
+                  lineHeight: 1.9,
+                  textAlign: 'left',
+                  outline: 'none',
+                  whiteSpace: 'pre-wrap',
+                  marginTop: 16,
+                }}
+              >
+                {`Here's to you — happy birthday, and here's a small smtg from my side.`}
+              </div>
             </div>
+
+            {slots.slice(3).length > 0 && (
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '22px 0', justifyContent: 'center', clear: 'both' }}>
+                {slots.slice(3).map((slot) => (
+                  <label key={slot.id} className="andi-imgSlot" style={floatSlotStyle(slot)}>
+                    {!slot.img && <span style={{ padding: 6 }}>+ photo</span>}
+                    <input type="file" accept="image/*" onChange={(e) => handleFile(slot.id, e.target.files[0])} style={fileInputStyle} />
+                  </label>
+                ))}
+              </div>
+            )}
 
             <div
               contentEditable
               suppressContentEditableWarning
               spellCheck={false}
-              style={{ marginTop: 30, textAlign: 'right', fontStyle: 'italic', fontSize: '1.05rem', opacity: 0.85, outline: 'none' }}
+              style={{
+                fontFamily: "'Caveat', cursive",
+                fontWeight: 700,
+                clear: 'both',
+                marginTop: 30,
+                textAlign: 'right',
+                fontSize: '1.7rem',
+                opacity: 0.85,
+                outline: 'none',
+              }}
             >
               — with love
             </div>
@@ -370,9 +436,10 @@ export default function AndiGift() {
 }
 
 const toolbarBtn = {
-  fontFamily: 'Georgia, serif',
-  fontSize: '0.8rem',
-  padding: '8px 16px',
+  fontFamily: "'Caveat', cursive",
+  fontWeight: 700,
+  fontSize: '1.05rem',
+  padding: '8px 18px',
   borderRadius: 20,
   border: '1px solid rgba(43,28,16,0.4)',
   background: 'rgba(255,255,255,0.25)',
@@ -380,3 +447,30 @@ const toolbarBtn = {
   cursor: 'pointer',
   letterSpacing: '0.03em',
 }
+
+function floatSlotStyle(slot) {
+  return {
+    width: 140,
+    height: 140,
+    border: '2px dashed rgba(43,28,16,0.35)',
+    borderRadius: 4,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontFamily: "'Caveat', cursive",
+    fontSize: '0.95rem',
+    color: 'rgba(43,28,16,0.55)',
+    cursor: 'pointer',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundImage: slot?.img ? `url(${slot.img})` : undefined,
+    position: 'relative',
+    transform: `rotate(${slot?.rot || 0}deg)`,
+    boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
+    overflow: 'hidden',
+    transition: 'transform 0.2s',
+  }
+}
+
+const fileInputStyle = { position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }
