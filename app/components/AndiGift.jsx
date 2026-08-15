@@ -419,6 +419,16 @@ export default function AndiGift() {
           color: '#f6f2e7',
         }}
       >
+        <img
+          src="/cake.gif"
+          alt="birthday cake"
+          style={{
+            width: 'clamp(110px, 20vw, 160px)',
+            marginBottom: 18,
+            filter: 'drop-shadow(0 0 24px rgba(246,242,231,0.35))',
+            animation: 'andi-fadein 1s ease forwards',
+          }}
+        />
         <h1
           style={{
             fontFamily: "'Cinzel Decorative', serif",
