@@ -274,13 +274,27 @@ export default function AndiGift() {
         .andi-dropcap { font-size: 5.2rem; }
         .andi-title { font-size: clamp(2.2rem, 6vw, 3.4rem); }
 
+        .andi-row { display: flex; align-items: flex-start; gap: 44px; margin-bottom: 44px; }
+        .andi-row-reverse { flex-direction: row-reverse; }
+        .andi-row-text { flex: 1; min-width: 0; }
+
         @media (max-width: 900px) {
           .andi-letter { padding: 54px 8vw 130px; }
           .andi-imgSlot-float { width: 150px; }
         }
+        @media (max-width: 760px) {
+          .andi-row, .andi-row-reverse {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 18px;
+            margin-bottom: 36px;
+          }
+          .andi-row-text { text-align: left; }
+        }
         @media (max-width: 640px) {
           .andi-letter { padding: 44px 6vw 150px; }
-          .andi-imgSlot-float { width: 42vw; max-width: 190px; }
+          .andi-imgSlot-float { width: 55vw; max-width: 220px; }
           .andi-body-text { font-size: 1.15rem; line-height: 1.8; }
           .andi-dropcap { font-size: 3.6rem; }
         }
@@ -437,67 +451,63 @@ export default function AndiGift() {
               <div style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 auto 50px' }} />
             </div>
 
-            {/* letter body with drop cap + floated polaroid photos */}
+            {/* letter body — image+text rows, side-by-side on desktop, stacked & centered on mobile */}
             <div
               style={{
-                overflow: 'hidden',
                 animation: unroll ? 'andi-riseIn 0.9s ease 0.55s both' : 'none',
                 opacity: unroll ? undefined : 0,
               }}
             >
-              {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} float="left" mr={26} mb={10} />}
+              <div className="andi-row">
+                {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} />}
+                <p className="andi-body-text andi-row-text" style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, margin: 0 }}>
+                  <span
+                    className="andi-dropcap"
+                    style={{
+                      fontFamily: "'Cinzel Decorative', serif",
+                      float: 'left',
+                      lineHeight: 0.8,
+                      padding: '8px 10px 0 0',
+                      color: '#8a3b2e',
+                    }}
+                  >
+                    H
+                  </span>
+                  <span contentEditable suppressContentEditableWarning spellCheck={false} style={{ outline: 'none' }}>
+                    {`ey andi,\n\nJust a little corner of the internet made for you.`}
+                  </span>
+                </p>
+              </div>
 
-              <p className="andi-body-text" style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, margin: 0 }}>
-                <span
-                  className="andi-dropcap"
-                  style={{
-                    fontFamily: "'Cinzel Decorative', serif",
-                    float: 'left',
-                    lineHeight: 0.8,
-                    padding: '8px 10px 0 0',
-                    color: '#8a3b2e',
-                  }}
+              <div className="andi-row andi-row-reverse">
+                {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} />}
+                <p
+                  contentEditable
+                  suppressContentEditableWarning
+                  spellCheck={false}
+                  className="andi-body-text andi-row-text"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', lineHeight: 1.9, outline: 'none', margin: 0 }}
                 >
-                  H
-                </span>
-                <span contentEditable suppressContentEditableWarning spellCheck={false} style={{ outline: 'none' }}>
-                  {`ey andi,\n\nJust a little corner of the internet made for you.`}
-                </span>
-              </p>
+                  {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
+                </p>
+              </div>
 
-              {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} float="right" ml={26} mt={30} mb={10} />}
-
-              <p
-                contentEditable
-                suppressContentEditableWarning
-                spellCheck={false}
-                className="andi-body-text"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontStyle: 'italic',
-                  lineHeight: 1.9,
-                  outline: 'none',
-                  marginTop: 30,
-                }}
-              >
-                {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
-              </p>
-
-              {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} float="left" round mr={26} mt={30} mb={10} />}
-
-              <p
-                contentEditable
-                suppressContentEditableWarning
-                spellCheck={false}
-                className="andi-body-text"
-                style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, outline: 'none', marginTop: 30 }}
-              >
-                {`Here's to you — happy birthday, and here's a small smtg from my side.`}
-              </p>
+              <div className="andi-row">
+                {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} round />}
+                <p
+                  contentEditable
+                  suppressContentEditableWarning
+                  spellCheck={false}
+                  className="andi-body-text andi-row-text"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, outline: 'none', margin: 0 }}
+                >
+                  {`Here's to you — happy birthday, and here's a small smtg from my side.`}
+                </p>
+              </div>
             </div>
 
             {slots.slice(3).length > 0 && (
-              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', margin: '36px 0', justifyContent: 'center', clear: 'both' }}>
+              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', margin: '20px 0 36px', justifyContent: 'center' }}>
                 {slots.slice(3).map((slot) => (
                   <Polaroid key={slot.id} slot={slot} onFile={(f) => handleFile(slot.id, f)} />
                 ))}
@@ -556,17 +566,13 @@ export default function AndiGift() {
   )
 }
 
-function Polaroid({ slot, onFile, float, round, mr = 0, ml = 0, mt = 0, mb = 0 }) {
+function Polaroid({ slot, onFile, round }) {
   return (
     <label
       className="andi-imgSlot andi-imgSlot-float"
       style={{
         display: 'block',
-        float: float || undefined,
-        marginRight: mr,
-        marginLeft: ml,
-        marginTop: mt,
-        marginBottom: mb,
+        flexShrink: 0,
         background: '#fdfaf2',
         padding: round ? 10 : '10px 10px 26px 10px',
         borderRadius: round ? '50%' : 3,
