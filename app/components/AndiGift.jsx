@@ -165,7 +165,7 @@ export default function AndiGift() {
     return () => clearInterval(iv)
   }, [])
 
-
+  function burstConfetti() {
     const colors = ['#f6f2e7', '#d9b872', '#e3d3a6', '#ffffff']
     for (let i = 0; i < 26; i++) {
       const b = document.createElement('div')
@@ -260,6 +260,19 @@ export default function AndiGift() {
         .andi-btn:hover { background: rgba(246,242,231,0.14) !important; box-shadow: 0 0 30px rgba(246,242,231,0.25); }
         .andi-btn:active { transform: scale(0.92) rotate(-3deg); }
         .andi-imgSlot:hover { transform: scale(1.04); }
+
+        .andi-scroll { padding: 50px 44px 40px; }
+        .andi-imgSlot-float { width: 140px; height: 140px; }
+        .andi-body-text { font-size: 1.3rem; }
+
+        @media (max-width: 640px) {
+          .andi-scroll { padding: 34px 20px 28px; }
+          .andi-imgSlot-float { width: 96px; height: 96px; }
+          .andi-body-text { font-size: 1.05rem; line-height: 1.75; }
+        }
+        @media (max-width: 400px) {
+          .andi-imgSlot-float { width: 78px; height: 78px; }
+        }
       `}</style>
 
       <div
@@ -374,6 +387,7 @@ export default function AndiGift() {
 
           <div
             ref={scrollElRef}
+            className="andi-scroll"
             style={{
               position: 'relative',
               maxWidth: 640,
@@ -384,7 +398,6 @@ export default function AndiGift() {
                 'radial-gradient(ellipse at top left, rgba(255,255,255,0.25), transparent 40%), linear-gradient(180deg, #f1e4c3 0%, #e3d3a6 100%)',
               borderRadius: 6,
               boxShadow: '0 30px 80px rgba(0,0,0,0.6), inset 0 0 60px rgba(120,90,40,0.25)',
-              padding: '50px 44px 40px',
               color: '#2b1c10',
               transformOrigin: 'top center',
               animation: unroll ? 'andi-unroll 1.1s cubic-bezier(.4,0,.2,1) forwards' : 'none',
@@ -430,8 +443,8 @@ export default function AndiGift() {
             <div style={{ overflow: 'hidden' }}>
               {slots[0] && (
                 <label
-                  className="andi-imgSlot"
-                  style={{ ...floatSlotStyle(slots[0], 'left'), float: 'left', marginRight: 18 }}
+                  className="andi-imgSlot andi-imgSlot-float"
+                  style={{ ...floatSlotStyle(slots[0]), float: 'left', marginRight: 16, marginBottom: 8 }}
                 >
                   {!slots[0].img && <span style={{ padding: 6 }}>+ photo</span>}
                   <input type="file" accept="image/*" onChange={(e) => handleFile(slots[0].id, e.target.files[0])} style={fileInputStyle} />
@@ -442,9 +455,9 @@ export default function AndiGift() {
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
+                className="andi-body-text"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '1.3rem',
                   lineHeight: 1.9,
                   textAlign: 'left',
                   outline: 'none',
@@ -456,8 +469,8 @@ export default function AndiGift() {
 
               {slots[1] && (
                 <label
-                  className="andi-imgSlot"
-                  style={{ ...floatSlotStyle(slots[1], 'right'), float: 'right', marginLeft: 18, marginTop: 20 }}
+                  className="andi-imgSlot andi-imgSlot-float"
+                  style={{ ...floatSlotStyle(slots[1]), float: 'right', marginLeft: 16, marginTop: 20, marginBottom: 8 }}
                 >
                   {!slots[1].img && <span style={{ padding: 6 }}>+ photo</span>}
                   <input type="file" accept="image/*" onChange={(e) => handleFile(slots[1].id, e.target.files[0])} style={fileInputStyle} />
@@ -468,10 +481,10 @@ export default function AndiGift() {
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
+                className="andi-body-text"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
-                  fontSize: '1.3rem',
                   lineHeight: 1.9,
                   textAlign: 'left',
                   outline: 'none',
@@ -484,8 +497,8 @@ export default function AndiGift() {
 
               {slots[2] && (
                 <label
-                  className="andi-imgSlot"
-                  style={{ ...floatSlotStyle(slots[2], 'left'), float: 'left', borderRadius: '50%', marginRight: 18, marginTop: 20 }}
+                  className="andi-imgSlot andi-imgSlot-float"
+                  style={{ ...floatSlotStyle(slots[2]), float: 'left', borderRadius: '50%', marginRight: 16, marginTop: 20, marginBottom: 8 }}
                 >
                   {!slots[2].img && <span style={{ padding: 6 }}>+ photo</span>}
                   <input type="file" accept="image/*" onChange={(e) => handleFile(slots[2].id, e.target.files[0])} style={fileInputStyle} />
@@ -496,9 +509,9 @@ export default function AndiGift() {
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
+                className="andi-body-text"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '1.3rem',
                   lineHeight: 1.9,
                   textAlign: 'left',
                   outline: 'none',
@@ -513,7 +526,7 @@ export default function AndiGift() {
             {slots.slice(3).length > 0 && (
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '22px 0', justifyContent: 'center', clear: 'both' }}>
                 {slots.slice(3).map((slot) => (
-                  <label key={slot.id} className="andi-imgSlot" style={floatSlotStyle(slot)}>
+                  <label key={slot.id} className="andi-imgSlot andi-imgSlot-float" style={floatSlotStyle(slot)}>
                     {!slot.img && <span style={{ padding: 6 }}>+ photo</span>}
                     <input type="file" accept="image/*" onChange={(e) => handleFile(slot.id, e.target.files[0])} style={fileInputStyle} />
                   </label>
@@ -569,8 +582,6 @@ const toolbarBtn = {
 
 function floatSlotStyle(slot) {
   return {
-    width: 140,
-    height: 140,
     border: '2px dashed rgba(43,28,16,0.35)',
     borderRadius: 4,
     display: 'flex',
