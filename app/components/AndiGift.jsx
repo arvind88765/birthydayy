@@ -634,23 +634,32 @@ export default function AndiGift() {
               </div>
             )}
 
-            <div
-              contentEditable
-              suppressContentEditableWarning
-              spellCheck={false}
-              style={{
-                fontFamily: "'Caveat', cursive",
-                fontWeight: 700,
-                clear: 'both',
-                marginTop: 50,
-                textAlign: 'right',
-                fontSize: '2rem',
-                opacity: 0.85,
-                outline: 'none',
-                animation: unroll ? 'andi-riseIn 0.9s ease 0.75s both' : 'none',
-              }}
-            >
-              — with love
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 14, marginTop: 50, clear: 'both' }}>
+              <img
+                src="/cat-love.gif"
+                alt="party cat"
+                style={{
+                  width: 64,
+                  transform: 'rotate(-6deg)',
+                  animation: unroll ? 'andi-riseIn 0.9s ease 0.75s both' : 'none',
+                }}
+              />
+              <div
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                style={{
+                  fontFamily: "'Caveat', cursive",
+                  fontWeight: 700,
+                  textAlign: 'right',
+                  fontSize: '2rem',
+                  opacity: 0.85,
+                  outline: 'none',
+                  animation: unroll ? 'andi-riseIn 0.9s ease 0.75s both' : 'none',
+                }}
+              >
+                — with love
+              </div>
             </div>
             </div>
           </div>
