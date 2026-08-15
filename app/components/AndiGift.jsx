@@ -268,35 +268,40 @@ export default function AndiGift() {
         .andi-btn:active { transform: scale(0.92) rotate(-3deg); }
         .andi-imgSlot:hover { transform: scale(1.06) !important; }
 
-        .andi-letter { padding: 64px 12vw 120px; }
-        .andi-imgSlot-float { width: 200px; }
-        .andi-body-text { font-size: 1.45rem; }
-        .andi-dropcap { font-size: 5.2rem; }
-        .andi-title { font-size: clamp(2.2rem, 6vw, 3.4rem); }
+        /* ===== DESKTOP (default, >900px): wide canvas, generous scale ===== */
+        .andi-letter { padding: 90px 8vw 140px; max-width: 1180px; }
+        .andi-imgSlot-float { width: 260px; }
+        .andi-body-text { font-size: 1.5rem; }
+        .andi-dropcap { font-size: 5.6rem; }
+        .andi-title { font-size: clamp(2.6rem, 4.2vw, 4rem); }
 
-        .andi-row { display: flex; align-items: flex-start; gap: 44px; margin-bottom: 44px; }
+        .andi-row { display: flex; align-items: center; gap: 64px; margin-bottom: 64px; }
         .andi-row-reverse { flex-direction: row-reverse; }
-        .andi-row-text { flex: 1; min-width: 0; }
+        .andi-row-text { flex: 1; min-width: 0; text-align: left; }
 
+        /* ===== TABLET (≤900px): smaller desktop-style rows ===== */
         @media (max-width: 900px) {
-          .andi-letter { padding: 54px 8vw 130px; }
-          .andi-imgSlot-float { width: 150px; }
+          .andi-letter { padding: 60px 7vw 130px; max-width: 700px; }
+          .andi-imgSlot-float { width: 170px; }
+          .andi-row { gap: 32px; margin-bottom: 44px; }
+          .andi-body-text { font-size: 1.3rem; }
+          .andi-dropcap { font-size: 4.6rem; }
         }
-        @media (max-width: 760px) {
+
+        /* ===== MOBILE (≤640px): stacked, centered, its own design ===== */
+        @media (max-width: 640px) {
+          .andi-letter { padding: 44px 7vw 160px; max-width: 100%; }
           .andi-row, .andi-row-reverse {
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 18px;
-            margin-bottom: 36px;
+            gap: 16px;
+            margin-bottom: 40px;
           }
-          .andi-row-text { text-align: left; }
-        }
-        @media (max-width: 640px) {
-          .andi-letter { padding: 44px 6vw 150px; }
-          .andi-imgSlot-float { width: 55vw; max-width: 220px; }
-          .andi-body-text { font-size: 1.15rem; line-height: 1.8; }
-          .andi-dropcap { font-size: 3.6rem; }
+          .andi-imgSlot-float { width: 62vw; max-width: 230px; }
+          .andi-body-text, .andi-row-text { font-size: 1.15rem; line-height: 1.75; text-align: center; }
+          .andi-dropcap { font-size: 3.4rem; float: none; display: block; margin: 0 auto 4px; }
+          .andi-title { font-size: clamp(2rem, 9vw, 2.6rem); }
         }
       `}</style>
 
