@@ -17,8 +17,9 @@ export default function AndiGift() {
     { id: 1, img: null, rot: -4 },
     { id: 2, img: null, rot: 3 },
     { id: 3, img: null, rot: -2 },
+    { id: 4, img: null, rot: 4 },
   ])
-  const nextId = useRef(4)
+  const nextId = useRef(5)
 
   // build starfield once
   useEffect(() => {
@@ -566,7 +567,7 @@ export default function AndiGift() {
                 className="andi-body-text"
                 style={{ margin: '0 0 22px 0', outline: 'none' }}
               >
-                {`ey andi, Just a little corner of the internet made for you.`}
+                {`ey andi, Just a little corner of the internet made for you. I wanted to put together something that felt a bit more personal than a text message, something you could actually sit with for a minute instead of scrolling past in half a second.`}
               </p>
 
               {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} round floatSide="left" />}
@@ -578,7 +579,7 @@ export default function AndiGift() {
                 className="andi-body-text"
                 style={{ fontStyle: 'italic', margin: '0 0 22px 0', outline: 'none' }}
               >
-                {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
+                {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read. Swap in the little memories that actually mean something — a photo from that one trip, an inside joke, whatever makes this feel like yours instead of a template.`}
               </p>
 
               {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} round floatSide="right" />}
@@ -590,7 +591,19 @@ export default function AndiGift() {
                 className="andi-body-text"
                 style={{ margin: '0 0 22px 0', outline: 'none' }}
               >
-                {`Here's to you — happy birthday, and here's a small smtg from my side.`}
+                {`Here's to you — happy birthday, and here's a small smtg from my side. I hope this year treats you gently and gives you exactly the kind of moments worth remembering, the ones you'll want to look back on and smile about later.`}
+              </p>
+
+              {slots[3] && <Polaroid slot={slots[3]} onFile={(f) => handleFile(slots[3].id, f)} floatSide="left" />}
+
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                className="andi-body-text"
+                style={{ margin: '0 0 22px 0', outline: 'none' }}
+              >
+                {`Anyway, that's enough rambling from me. Just know that this little page exists somewhere on the internet, made with you in mind, and it'll still be here whenever you feel like coming back to it.`}
               </p>
 
               <div style={{ clear: 'both' }} />
