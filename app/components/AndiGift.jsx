@@ -54,7 +54,118 @@ export default function AndiGift() {
     }
   }, [])
 
-  function burstConfetti() {
+  // shooting stars, on a loop
+  useEffect(() => {
+    const sky = skyRef.current
+    if (!sky) return
+    let cancelled = false
+    function fireShootingStar() {
+      if (cancelled) return
+      const star = document.createElement('div')
+      const startX = rand(10, 70)
+      const startY = rand(0, 30)
+      star.style.position = 'absolute'
+      star.style.left = startX + '%'
+      star.style.top = startY + '%'
+      star.style.width = '2px'
+      star.style.height = '2px'
+      star.style.borderRadius = '50%'
+      star.style.background = '#ffffff'
+      star.style.boxShadow = '0 0 6px 2px rgba(255,255,255,0.8)'
+      sky.appendChild(star)
+      const dx = rand(160, 260)
+      const dy = rand(90, 150)
+      star.animate(
+        [
+          { transform: 'translate(0,0)', opacity: 1, width: '2px' },
+          { transform: `translate(${dx}px, ${dy}px)`, opacity: 0, width: '90px' },
+        ],
+        { duration: 1000, easing: 'ease-out' }
+      )
+      setTimeout(() => star.remove(), 1050)
+      setTimeout(fireShootingStar, rand(3500, 8000))
+    }
+    const t = setTimeout(fireShootingStar, rand(1500, 3000))
+    return () => {
+      cancelled = true
+      clearTimeout(t)
+    }
+  }, [])
+
+  // cursor sparkle trail
+  useEffect(() => {
+    function onMove(e) {
+      if (Math.random() > 0.75) return
+      const s = document.createElement('div')
+      s.style.position = 'fixed'
+      s.style.left = e.clientX + 'px'
+      s.style.top = e.clientY + 'px'
+      s.style.width = '3px'
+      s.style.height = '3px'
+      s.style.borderRadius = '50%'
+      s.style.background = '#f6f2e7'
+      s.style.boxShadow = '0 0 6px 2px rgba(246,242,231,0.6)'
+      s.style.pointerEvents = 'none'
+      s.style.zIndex = 50
+      document.body.appendChild(s)
+      s.animate(
+        [
+          { transform: 'translate(0,0) scale(1)', opacity: 0.9 },
+          { transform: `translate(${rand(-10, 10)}px, ${rand(10, 26)}px) scale(0.2)`, opacity: 0 },
+        ],
+        { duration: 700, easing: 'ease-out' }
+      )
+      setTimeout(() => s.remove(), 720)
+    }
+    window.addEventListener('pointermove', onMove)
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
+  const [hearts, setHearts] = useState(false)
+  useEffect(() => {
+    if (!hearts) return
+    let cancelled = false
+    function drop() {
+      if (cancelled) return
+      const h = document.createElement('div')
+      h.textContent = '♥'
+      h.style.position = 'fixed'
+      h.style.left = rand(5, 95) + '%'
+      h.style.top = '-30px'
+      h.style.color = ['#d9b872', '#e39aa0', '#f6f2e7'][Math.floor(Math.random() * 3)]
+      h.style.fontSize = rand(14, 26) + 'px'
+      h.style.zIndex = 55
+      h.style.pointerEvents = 'none'
+      document.body.appendChild(h)
+      const anim = h.animate(
+        [
+          { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+          { transform: `translateY(${window.innerHeight + 60}px) rotate(${rand(-40, 40)}deg)`, opacity: 0.2 },
+        ],
+        { duration: rand(4000, 7000), easing: 'linear' }
+      )
+      anim.onfinish = () => h.remove()
+      setTimeout(drop, rand(300, 700))
+    }
+    drop()
+    return () => {
+      cancelled = true
+    }
+  }, [hearts])
+
+  const [typed, setTyped] = useState('')
+  const fullTitle = 'hello andi'
+  useEffect(() => {
+    let i = 0
+    const iv = setInterval(() => {
+      i++
+      setTyped(fullTitle.slice(0, i))
+      if (i >= fullTitle.length) clearInterval(iv)
+    }, 110)
+    return () => clearInterval(iv)
+  }, [])
+
+
     const colors = ['#f6f2e7', '#d9b872', '#e3d3a6', '#ffffff']
     for (let i = 0; i < 26; i++) {
       const b = document.createElement('div')
@@ -125,6 +236,10 @@ export default function AndiGift() {
           0%,100% { opacity: var(--minop); transform: scale(1); }
           50% { opacity: 1; transform: scale(1.3); }
         }
+        @keyframes andi-blink {
+          0%,50% { opacity: 1; }
+          51%,100% { opacity: 0; }
+        }
         @keyframes andi-fadein {
           from { opacity: 0; transform: translateY(14px); }
           to { opacity: 1; transform: translateY(0); }
@@ -180,10 +295,11 @@ export default function AndiGift() {
             margin: '0 0 14px 0',
             letterSpacing: '0.04em',
             textShadow: '0 0 24px rgba(246,242,231,0.35), 0 0 2px rgba(246,242,231,0.6)',
-            animation: 'andi-fadein 1.4s ease forwards',
+            minHeight: '1.2em',
           }}
         >
-          hello andi
+          {typed}
+          <span style={{ animation: 'andi-blink 1s step-end infinite' }}>|</span>
         </h1>
         <p
           style={{
@@ -427,6 +543,9 @@ export default function AndiGift() {
               <button onClick={addSlot} style={toolbarBtn}>+ add photo slot</button>
               <button onClick={burstConfetti} style={toolbarBtn}>✦ burst</button>
               <button onClick={replay} style={toolbarBtn}>↺ replay</button>
+              <button onClick={() => setHearts((h) => !h)} style={toolbarBtn}>
+                {hearts ? '♥ hearts on' : '♡ hearts off'}
+              </button>
             </div>
           </div>
         </div>
