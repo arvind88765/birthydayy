@@ -11,7 +11,6 @@ function rand(min, max) {
 
 export default function AndiGift() {
   const skyRef = useRef(null)
-  const scrollElRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [unroll, setUnroll] = useState(false)
   const [slots, setSlots] = useState([
@@ -256,22 +255,34 @@ export default function AndiGift() {
           60% { opacity: 1; }
           100% { transform: scaleY(1); opacity: 1; }
         }
+        @keyframes andi-reveal {
+          0% { clip-path: inset(0 0 100% 0); }
+          100% { clip-path: inset(0 0 0% 0); }
+        }
+        @keyframes andi-riseIn {
+          from { opacity: 0; transform: translateY(22px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .andi-btn { animation: andi-fadein 1.2s ease forwards, andi-wobble 3.2s ease-in-out infinite; animation-delay: 0.2s, 1.8s; }
         .andi-btn:hover { background: rgba(246,242,231,0.14) !important; box-shadow: 0 0 30px rgba(246,242,231,0.25); }
         .andi-btn:active { transform: scale(0.92) rotate(-3deg); }
-        .andi-imgSlot:hover { transform: scale(1.04); }
+        .andi-imgSlot:hover { transform: scale(1.06) !important; }
 
-        .andi-scroll { padding: 50px 44px 40px; }
-        .andi-imgSlot-float { width: 140px; height: 140px; }
-        .andi-body-text { font-size: 1.3rem; }
+        .andi-letter { padding: 64px 12vw 120px; }
+        .andi-imgSlot-float { width: 200px; }
+        .andi-body-text { font-size: 1.45rem; }
+        .andi-dropcap { font-size: 5.2rem; }
+        .andi-title { font-size: clamp(2.2rem, 6vw, 3.4rem); }
 
-        @media (max-width: 640px) {
-          .andi-scroll { padding: 34px 20px 28px; }
-          .andi-imgSlot-float { width: 96px; height: 96px; }
-          .andi-body-text { font-size: 1.05rem; line-height: 1.75; }
+        @media (max-width: 900px) {
+          .andi-letter { padding: 54px 8vw 130px; }
+          .andi-imgSlot-float { width: 150px; }
         }
-        @media (max-width: 400px) {
-          .andi-imgSlot-float { width: 78px; height: 78px; }
+        @media (max-width: 640px) {
+          .andi-letter { padding: 44px 6vw 150px; }
+          .andi-imgSlot-float { width: 42vw; max-width: 190px; }
+          .andi-body-text { font-size: 1.15rem; line-height: 1.8; }
+          .andi-dropcap { font-size: 3.6rem; }
         }
       `}</style>
 
@@ -352,132 +363,111 @@ export default function AndiGift() {
         </div>
       </div>
 
-      {/* Scroll overlay */}
+      {/* Full-screen letter — no card, no backdrop, the letter IS the screen */}
       {open && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
             zIndex: 5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 20,
-            background: 'rgba(5,6,12,0.75)',
+            overflowY: 'auto',
+            background:
+              "radial-gradient(ellipse at 15% 0%, rgba(255,255,255,0.35), transparent 45%), radial-gradient(ellipse at 100% 100%, rgba(120,90,40,0.18), transparent 50%), linear-gradient(175deg, #f3e7c9 0%, #ecdcb3 45%, #e2cd9c 100%)",
+            color: '#2b1c10',
+            animation: unroll ? 'andi-reveal 1s cubic-bezier(.6,0,.2,1) forwards' : 'none',
+            clipPath: unroll ? undefined : 'inset(0 0 100% 0)',
           }}
         >
+          {/* inset double-rule frame, letter-style */}
+          <div
+            style={{
+              position: 'fixed',
+              inset: 14,
+              border: '1px solid rgba(43,28,16,0.35)',
+              pointerEvents: 'none',
+              zIndex: 6,
+            }}
+          />
+          <div
+            style={{
+              position: 'fixed',
+              inset: 20,
+              border: '1px solid rgba(43,28,16,0.18)',
+              pointerEvents: 'none',
+              zIndex: 6,
+            }}
+          />
+
+          {/* wax-seal close button */}
           <button
             onClick={closeNote}
             aria-label="close"
             style={{
-              position: 'absolute',
-              top: 22,
-              right: 26,
-              background: 'none',
-              border: 'none',
-              color: '#f6f2e7',
-              fontSize: '1.8rem',
+              position: 'fixed',
+              top: 30,
+              right: 30,
+              width: 44,
+              height: 44,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 35% 30%, #8a3b2e, #5c2018)',
+              border: '2px solid rgba(43,28,16,0.4)',
+              color: '#f1e4c3',
+              fontSize: '1.2rem',
+              fontFamily: "'Cinzel Decorative', serif",
               cursor: 'pointer',
-              opacity: 0.7,
               zIndex: 20,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.35)',
             }}
           >
             ✕
           </button>
 
-          <div
-            ref={scrollElRef}
-            className="andi-scroll"
-            style={{
-              position: 'relative',
-              maxWidth: 640,
-              width: '100%',
-              maxHeight: '86vh',
-              overflowY: 'auto',
-              background:
-                'radial-gradient(ellipse at top left, rgba(255,255,255,0.25), transparent 40%), linear-gradient(180deg, #f1e4c3 0%, #e3d3a6 100%)',
-              borderRadius: 6,
-              boxShadow: '0 30px 80px rgba(0,0,0,0.6), inset 0 0 60px rgba(120,90,40,0.25)',
-              color: '#2b1c10',
-              transformOrigin: 'top center',
-              animation: unroll ? 'andi-unroll 1.1s cubic-bezier(.4,0,.2,1) forwards' : 'none',
-              transform: unroll ? undefined : 'scaleY(0.05)',
-              opacity: unroll ? undefined : 0.4,
-            }}
-          >
-            {['tl', 'tr', 'bl', 'br'].map((c) => (
-              <div
-                key={c}
-                style={{
-                  position: 'absolute',
-                  width: 34,
-                  height: 34,
-                  border: '2px solid #d9b872',
-                  opacity: 0.6,
-                  top: c.includes('t') ? 14 : undefined,
-                  bottom: c.includes('b') ? 14 : undefined,
-                  left: c.includes('l') ? 14 : undefined,
-                  right: c.includes('r') ? 14 : undefined,
-                  borderRight: c.includes('r') ? '2px solid #d9b872' : 'none',
-                  borderLeft: c.includes('l') ? '2px solid #d9b872' : 'none',
-                  borderTop: c.includes('t') ? '2px solid #d9b872' : 'none',
-                  borderBottom: c.includes('b') ? '2px solid #d9b872' : 'none',
-                }}
-              />
-            ))}
-
-            <h2
+          <div className="andi-letter" style={{ position: 'relative', zIndex: 7, maxWidth: 860, margin: '0 auto' }}>
+            <div
               style={{
-                fontFamily: "'Cinzel Decorative', serif",
-                fontSize: '1.7rem',
-                fontWeight: 700,
                 textAlign: 'center',
-                margin: '0 0 6px 0',
+                animation: unroll ? 'andi-riseIn 0.9s ease 0.35s both' : 'none',
+                opacity: unroll ? undefined : 0,
               }}
             >
-              for andi ✦
-            </h2>
-            <div style={{ width: 120, height: 1, background: '#2b1c10', opacity: 0.3, margin: '0 auto 26px' }} />
+              <div style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6 }}>✦ ✦ ✦</div>
+              <h2 className="andi-title" style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700, margin: '0 0 10px 0' }}>
+                for andi
+              </h2>
+              <div style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 auto 50px' }} />
+            </div>
 
-            {/* text with images floated inside it, like a scrapbook page */}
-            <div style={{ overflow: 'hidden' }}>
-              {slots[0] && (
-                <label
-                  className="andi-imgSlot andi-imgSlot-float"
-                  style={{ ...floatSlotStyle(slots[0]), float: 'left', marginRight: 16, marginBottom: 8 }}
+            {/* letter body with drop cap + floated polaroid photos */}
+            <div
+              style={{
+                overflow: 'hidden',
+                animation: unroll ? 'andi-riseIn 0.9s ease 0.55s both' : 'none',
+                opacity: unroll ? undefined : 0,
+              }}
+            >
+              {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} float="left" mr={26} mb={10} />}
+
+              <p className="andi-body-text" style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, margin: 0 }}>
+                <span
+                  className="andi-dropcap"
+                  style={{
+                    fontFamily: "'Cinzel Decorative', serif",
+                    float: 'left',
+                    lineHeight: 0.8,
+                    padding: '8px 10px 0 0',
+                    color: '#8a3b2e',
+                  }}
                 >
-                  {!slots[0].img && <span style={{ padding: 6 }}>+ photo</span>}
-                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[0].id, e.target.files[0])} style={fileInputStyle} />
-                </label>
-              )}
+                  H
+                </span>
+                <span contentEditable suppressContentEditableWarning spellCheck={false} style={{ outline: 'none' }}>
+                  {`ey andi,\n\nJust a little corner of the internet made for you.`}
+                </span>
+              </p>
 
-              <div
-                contentEditable
-                suppressContentEditableWarning
-                spellCheck={false}
-                className="andi-body-text"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  lineHeight: 1.9,
-                  textAlign: 'left',
-                  outline: 'none',
-                  whiteSpace: 'pre-wrap',
-                }}
-              >
-                {`Hey andi,\n\nJust a little corner of the internet made for you.`}
-              </div>
+              {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} float="right" ml={26} mt={30} mb={10} />}
 
-              {slots[1] && (
-                <label
-                  className="andi-imgSlot andi-imgSlot-float"
-                  style={{ ...floatSlotStyle(slots[1]), float: 'right', marginLeft: 16, marginTop: 20, marginBottom: 8 }}
-                >
-                  {!slots[1].img && <span style={{ padding: 6 }}>+ photo</span>}
-                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[1].id, e.target.files[0])} style={fileInputStyle} />
-                </label>
-              )}
-
-              <div
+              <p
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
@@ -486,50 +476,30 @@ export default function AndiGift() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: 'italic',
                   lineHeight: 1.9,
-                  textAlign: 'left',
                   outline: 'none',
-                  whiteSpace: 'pre-wrap',
-                  marginTop: 16,
+                  marginTop: 30,
                 }}
               >
                 {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
-              </div>
+              </p>
 
-              {slots[2] && (
-                <label
-                  className="andi-imgSlot andi-imgSlot-float"
-                  style={{ ...floatSlotStyle(slots[2]), float: 'left', borderRadius: '50%', marginRight: 16, marginTop: 20, marginBottom: 8 }}
-                >
-                  {!slots[2].img && <span style={{ padding: 6 }}>+ photo</span>}
-                  <input type="file" accept="image/*" onChange={(e) => handleFile(slots[2].id, e.target.files[0])} style={fileInputStyle} />
-                </label>
-              )}
+              {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} float="left" round mr={26} mt={30} mb={10} />}
 
-              <div
+              <p
                 contentEditable
                 suppressContentEditableWarning
                 spellCheck={false}
                 className="andi-body-text"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  lineHeight: 1.9,
-                  textAlign: 'left',
-                  outline: 'none',
-                  whiteSpace: 'pre-wrap',
-                  marginTop: 16,
-                }}
+                style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, outline: 'none', marginTop: 30 }}
               >
                 {`Here's to you — happy birthday, and here's a small smtg from my side.`}
-              </div>
+              </p>
             </div>
 
             {slots.slice(3).length > 0 && (
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '22px 0', justifyContent: 'center', clear: 'both' }}>
+              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', margin: '36px 0', justifyContent: 'center', clear: 'both' }}>
                 {slots.slice(3).map((slot) => (
-                  <label key={slot.id} className="andi-imgSlot andi-imgSlot-float" style={floatSlotStyle(slot)}>
-                    {!slot.img && <span style={{ padding: 6 }}>+ photo</span>}
-                    <input type="file" accept="image/*" onChange={(e) => handleFile(slot.id, e.target.files[0])} style={fileInputStyle} />
-                  </label>
+                  <Polaroid key={slot.id} slot={slot} onFile={(f) => handleFile(slot.id, f)} />
                 ))}
               </div>
             )}
@@ -542,28 +512,89 @@ export default function AndiGift() {
                 fontFamily: "'Caveat', cursive",
                 fontWeight: 700,
                 clear: 'both',
-                marginTop: 30,
+                marginTop: 50,
                 textAlign: 'right',
-                fontSize: '1.7rem',
+                fontSize: '2rem',
                 opacity: 0.85,
                 outline: 'none',
+                animation: unroll ? 'andi-riseIn 0.9s ease 0.75s both' : 'none',
               }}
             >
               — with love
             </div>
+          </div>
 
-            <div style={{ marginTop: 28, display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button onClick={addSlot} style={toolbarBtn}>+ add photo slot</button>
-              <button onClick={burstConfetti} style={toolbarBtn}>✦ burst</button>
-              <button onClick={replay} style={toolbarBtn}>↺ replay</button>
-              <button onClick={() => setHearts((h) => !h)} style={toolbarBtn}>
-                {hearts ? '♥ hearts on' : '♡ hearts off'}
-              </button>
-            </div>
+          <div
+            style={{
+              position: 'fixed',
+              bottom: 26,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              gap: 10,
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              zIndex: 20,
+              background: 'rgba(241,228,195,0.85)',
+              backdropFilter: 'blur(6px)',
+              padding: '10px 16px',
+              borderRadius: 30,
+              border: '1px solid rgba(43,28,16,0.25)',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+            }}
+          >
+            <button onClick={addSlot} style={toolbarBtn}>+ photo</button>
+            <button onClick={burstConfetti} style={toolbarBtn}>✦ burst</button>
+            <button onClick={replay} style={toolbarBtn}>↺ replay</button>
+            <button onClick={() => setHearts((h) => !h)} style={toolbarBtn}>
+              {hearts ? '♥ hearts on' : '♡ hearts off'}
+            </button>
           </div>
         </div>
       )}
     </div>
+  )
+}
+
+function Polaroid({ slot, onFile, float, round, mr = 0, ml = 0, mt = 0, mb = 0 }) {
+  return (
+    <label
+      className="andi-imgSlot andi-imgSlot-float"
+      style={{
+        display: 'block',
+        float: float || undefined,
+        marginRight: mr,
+        marginLeft: ml,
+        marginTop: mt,
+        marginBottom: mb,
+        background: '#fdfaf2',
+        padding: round ? 10 : '10px 10px 26px 10px',
+        borderRadius: round ? '50%' : 3,
+        boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
+        transform: `rotate(${slot.rot}deg)`,
+        cursor: 'pointer',
+        position: 'relative',
+        transition: 'transform 0.2s',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          aspectRatio: '1 / 1',
+          borderRadius: round ? '50%' : 2,
+          background: slot.img ? `url(${slot.img}) center/cover` : 'repeating-linear-gradient(45deg, #e7ddc4, #e7ddc4 8px, #ddd0ae 8px, #ddd0ae 16px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontFamily: "'Caveat', cursive",
+          color: 'rgba(43,28,16,0.5)',
+          fontSize: '1.1rem',
+        }}
+      >
+        {!slot.img && <span>+ photo</span>}
+      </div>
+      <input type="file" accept="image/*" onChange={(e) => onFile(e.target.files[0])} style={fileInputStyle} />
+    </label>
   )
 }
 
@@ -578,29 +609,6 @@ const toolbarBtn = {
   color: '#2b1c10',
   cursor: 'pointer',
   letterSpacing: '0.03em',
-}
-
-function floatSlotStyle(slot) {
-  return {
-    border: '2px dashed rgba(43,28,16,0.35)',
-    borderRadius: 4,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontFamily: "'Caveat', cursive",
-    fontSize: '0.95rem',
-    color: 'rgba(43,28,16,0.55)',
-    cursor: 'pointer',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundImage: slot?.img ? `url(${slot.img})` : undefined,
-    position: 'relative',
-    transform: `rotate(${slot?.rot || 0}deg)`,
-    boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
-    overflow: 'hidden',
-    transition: 'transform 0.2s',
-  }
 }
 
 const fileInputStyle = { position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }
