@@ -303,6 +303,45 @@ export default function AndiGift() {
           .andi-dropcap { font-size: 3.4rem; float: none; display: block; margin: 0 auto 4px; }
           .andi-title { font-size: clamp(2rem, 9vw, 2.6rem); }
         }
+
+        /* ===== floating toolbar: solid on mobile, never wraps ===== */
+        .andi-toolbar {
+          position: fixed;
+          bottom: 18px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+          justify-content: center;
+          flex-wrap: nowrap;
+          max-width: calc(100vw - 24px);
+          overflow-x: auto;
+          z-index: 20;
+          background: #f1e4c3;
+          padding: 8px 10px;
+          border-radius: 30px;
+          border: 1px solid rgba(43,28,16,0.25);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .andi-toolbar-btn {
+          font-family: 'Caveat', cursive;
+          font-weight: 700;
+          font-size: 1.05rem;
+          padding: 8px 18px;
+          border-radius: 20px;
+          border: 1px solid rgba(43,28,16,0.4);
+          background: rgba(255,255,255,0.35);
+          color: #2b1c10;
+          cursor: pointer;
+          letter-spacing: 0.03em;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .andi-toolbar-btn:active { transform: scale(0.94); }
+        @media (max-width: 640px) {
+          .andi-toolbar { bottom: 12px; gap: 6px; padding: 7px 8px; }
+          .andi-toolbar-btn { font-size: 0.85rem; padding: 6px 11px; }
+        }
       `}</style>
 
       <div
@@ -539,29 +578,11 @@ export default function AndiGift() {
             </div>
           </div>
 
-          <div
-            style={{
-              position: 'fixed',
-              bottom: 26,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: 10,
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              zIndex: 20,
-              background: 'rgba(241,228,195,0.85)',
-              backdropFilter: 'blur(6px)',
-              padding: '10px 16px',
-              borderRadius: 30,
-              border: '1px solid rgba(43,28,16,0.25)',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
-            }}
-          >
-            <button onClick={addSlot} style={toolbarBtn}>+ photo</button>
-            <button onClick={burstConfetti} style={toolbarBtn}>✦ burst</button>
-            <button onClick={replay} style={toolbarBtn}>↺ replay</button>
-            <button onClick={() => setHearts((h) => !h)} style={toolbarBtn}>
+          <div className="andi-toolbar">
+            <button onClick={addSlot} className="andi-toolbar-btn">+ photo</button>
+            <button onClick={burstConfetti} className="andi-toolbar-btn">✦ burst</button>
+            <button onClick={replay} className="andi-toolbar-btn">↺ replay</button>
+            <button onClick={() => setHearts((h) => !h)} className="andi-toolbar-btn">
               {hearts ? '♥ hearts on' : '♡ hearts off'}
             </button>
           </div>
@@ -607,19 +628,6 @@ function Polaroid({ slot, onFile, round }) {
       <input type="file" accept="image/*" onChange={(e) => onFile(e.target.files[0])} style={fileInputStyle} />
     </label>
   )
-}
-
-const toolbarBtn = {
-  fontFamily: "'Caveat', cursive",
-  fontWeight: 700,
-  fontSize: '1.05rem',
-  padding: '8px 18px',
-  borderRadius: 20,
-  border: '1px solid rgba(43,28,16,0.4)',
-  background: 'rgba(255,255,255,0.25)',
-  color: '#2b1c10',
-  cursor: 'pointer',
-  letterSpacing: '0.03em',
 }
 
 const fileInputStyle = { position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }
