@@ -268,40 +268,35 @@ export default function AndiGift() {
         .andi-btn:active { transform: scale(0.92) rotate(-3deg); }
         .andi-imgSlot:hover { transform: scale(1.06) !important; }
 
-        /* ===== DESKTOP (default, >900px): wide canvas, generous scale ===== */
-        .andi-letter { padding: 90px 8vw 140px; max-width: 1180px; }
-        .andi-imgSlot-float { width: 260px; }
-        .andi-body-text { font-size: 1.5rem; }
+        /* ===== DESKTOP (default, >900px): wide canvas, text wraps around floated photos ===== */
+        .andi-letter { padding: 90px 10vw 140px; max-width: 900px; }
+        .andi-imgSlot-float { width: 230px; }
+        .andi-body-text { font-size: 1.4rem; text-align: left; }
         .andi-dropcap { font-size: 5.6rem; }
         .andi-title { font-size: clamp(2.6rem, 4.2vw, 4rem); }
 
-        .andi-row { display: flex; align-items: center; gap: 64px; margin-bottom: 64px; }
-        .andi-row-reverse { flex-direction: row-reverse; }
-        .andi-row-text { flex: 1; min-width: 0; text-align: left; }
+        .andi-float-left { margin: 6px 34px 20px 0; }
+        .andi-float-right { margin: 6px 0 20px 34px; }
 
-        /* ===== TABLET (≤900px): smaller desktop-style rows ===== */
+        /* ===== TABLET (≤900px) ===== */
         @media (max-width: 900px) {
-          .andi-letter { padding: 60px 7vw 130px; max-width: 700px; }
-          .andi-imgSlot-float { width: 170px; }
-          .andi-row { gap: 32px; margin-bottom: 44px; }
-          .andi-body-text { font-size: 1.3rem; }
+          .andi-letter { padding: 60px 7vw 130px; max-width: 640px; }
+          .andi-imgSlot-float { width: 160px; }
+          .andi-body-text { font-size: 1.25rem; }
           .andi-dropcap { font-size: 4.6rem; }
+          .andi-float-left { margin: 4px 22px 16px 0; }
+          .andi-float-right { margin: 4px 0 16px 22px; }
         }
 
-        /* ===== MOBILE (≤640px): stacked, centered, its own design ===== */
+        /* ===== MOBILE (≤640px): smaller floats so text still wraps around them, like the sketch ===== */
         @media (max-width: 640px) {
           .andi-letter { padding: 44px 7vw 160px; max-width: 100%; }
-          .andi-row, .andi-row-reverse {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 16px;
-            margin-bottom: 40px;
-          }
-          .andi-imgSlot-float { width: 62vw; max-width: 230px; }
-          .andi-body-text, .andi-row-text { font-size: 1.15rem; line-height: 1.75; text-align: center; }
-          .andi-dropcap { font-size: 3.4rem; float: none; display: block; margin: 0 auto 4px; }
+          .andi-imgSlot-float { width: 42vw; max-width: 165px; }
+          .andi-body-text { font-size: 1.08rem; line-height: 1.75; text-align: left; }
+          .andi-dropcap { font-size: 3.4rem; float: none; display: block; margin: 0 0 4px; }
           .andi-title { font-size: clamp(2rem, 9vw, 2.6rem); }
+          .andi-float-left { margin: 4px 14px 14px 0; }
+          .andi-float-right { margin: 4px 0 14px 14px; }
         }
 
         /* ===== floating toolbar: solid on mobile, never wraps ===== */
@@ -495,59 +490,66 @@ export default function AndiGift() {
               <div style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 auto 50px' }} />
             </div>
 
-            {/* letter body — image+text rows, side-by-side on desktop, stacked & centered on mobile */}
+            {/* letter body — one continuous flow of text, photos floated inline so text wraps around them */}
             <div
+              className="andi-flow"
               style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                lineHeight: 1.9,
                 animation: unroll ? 'andi-riseIn 0.9s ease 0.55s both' : 'none',
                 opacity: unroll ? undefined : 0,
               }}
             >
-              <div className="andi-row">
-                {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} />}
-                <p className="andi-body-text andi-row-text" style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, margin: 0 }}>
-                  <span
-                    className="andi-dropcap"
-                    style={{
-                      fontFamily: "'Cinzel Decorative', serif",
-                      float: 'left',
-                      lineHeight: 0.8,
-                      padding: '8px 10px 0 0',
-                      color: '#8a3b2e',
-                    }}
-                  >
-                    H
-                  </span>
-                  <span contentEditable suppressContentEditableWarning spellCheck={false} style={{ outline: 'none' }}>
-                    {`ey andi,\n\nJust a little corner of the internet made for you.`}
-                  </span>
-                </p>
-              </div>
+              <span
+                className="andi-dropcap"
+                style={{
+                  fontFamily: "'Cinzel Decorative', serif",
+                  float: 'left',
+                  lineHeight: 0.8,
+                  padding: '8px 10px 0 0',
+                  color: '#8a3b2e',
+                }}
+              >
+                H
+              </span>
 
-              <div className="andi-row andi-row-reverse">
-                {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} />}
-                <p
-                  contentEditable
-                  suppressContentEditableWarning
-                  spellCheck={false}
-                  className="andi-body-text andi-row-text"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', lineHeight: 1.9, outline: 'none', margin: 0 }}
-                >
-                  {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
-                </p>
-              </div>
+              {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} round floatSide="right" />}
 
-              <div className="andi-row">
-                {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} round />}
-                <p
-                  contentEditable
-                  suppressContentEditableWarning
-                  spellCheck={false}
-                  className="andi-body-text andi-row-text"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", lineHeight: 1.9, outline: 'none', margin: 0 }}
-                >
-                  {`Here's to you — happy birthday, and here's a small smtg from my side.`}
-                </p>
-              </div>
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                className="andi-body-text"
+                style={{ margin: '0 0 22px 0', outline: 'none' }}
+              >
+                {`ey andi, Just a little corner of the internet made for you.`}
+              </p>
+
+              {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} floatSide="left" />}
+
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                className="andi-body-text"
+                style={{ fontStyle: 'italic', margin: '0 0 22px 0', outline: 'none' }}
+              >
+                {`Click any picture to drop in your own photo, and click anywhere in this text to rewrite it exactly how you want it to read.`}
+              </p>
+
+              {slots[2] && <Polaroid slot={slots[2]} onFile={(f) => handleFile(slots[2].id, f)} round floatSide="right" />}
+
+              <p
+                contentEditable
+                suppressContentEditableWarning
+                spellCheck={false}
+                className="andi-body-text"
+                style={{ margin: '0 0 22px 0', outline: 'none' }}
+              >
+                {`Here's to you — happy birthday, and here's a small smtg from my side.`}
+              </p>
+
+              <div style={{ clear: 'both' }} />
             </div>
 
             {slots.slice(3).length > 0 && (
@@ -592,13 +594,12 @@ export default function AndiGift() {
   )
 }
 
-function Polaroid({ slot, onFile, round }) {
+function Polaroid({ slot, onFile, round, floatSide }) {
   return (
     <label
-      className="andi-imgSlot andi-imgSlot-float"
+      className={`andi-imgSlot andi-imgSlot-float ${floatSide === 'left' ? 'andi-float-left' : floatSide === 'right' ? 'andi-float-right' : ''}`}
       style={{
         display: 'block',
-        flexShrink: 0,
         background: '#fdfaf2',
         padding: round ? 10 : '10px 10px 26px 10px',
         borderRadius: round ? '50%' : 3,
@@ -607,6 +608,7 @@ function Polaroid({ slot, onFile, round }) {
         cursor: 'pointer',
         position: 'relative',
         transition: 'transform 0.2s',
+        float: floatSide === 'left' ? 'left' : floatSide === 'right' ? 'right' : 'none',
       }}
     >
       <div
