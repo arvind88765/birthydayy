@@ -531,6 +531,13 @@ export default function AndiGift() {
             <div className="andi-stain andi-stain-2" />
             <div className="andi-stain andi-stain-3" />
 
+            {/* pixel flowers, scattered here and there */}
+            <PixelFlower size={30} color="#e39aa0" style={{ top: -14, left: 40 }} />
+            <PixelFlower size={22} color="#d9b872" center="#8a3b2e" style={{ top: 26, right: 24 }} />
+            <PixelFlower size={26} color="#9bb28c" center="#e39aa0" style={{ bottom: 60, left: -12 }} />
+            <PixelFlower size={20} color="#c98fae" style={{ bottom: -10, right: 60 }} />
+            <PixelFlower size={18} color="#e3b34a" center="#8a3b2e" style={{ top: '38%', right: -10 }} />
+
             <div className="andi-letter" style={{ position: 'relative', zIndex: 7 }}>
             <div
               style={{
@@ -666,6 +673,37 @@ export default function AndiGift() {
         </div>
       )}
     </div>
+  )
+}
+
+function PixelFlower({ size = 34, color = '#e39aa0', center = '#f6d76b', style }) {
+  // simple 7x7 pixel-grid flower, drawn as crisp <rect> blocks
+  const p = 1 // pixel unit in the 7x7 grid
+  const petals = [
+    [2, 0], [4, 0],
+    [1, 1], [5, 1],
+    [0, 2], [6, 2],
+    [1, 3], [5, 3],
+    [2, 4], [4, 4],
+  ]
+  return (
+    <svg
+      viewBox="0 0 7 7"
+      width={size}
+      height={size}
+      shapeRendering="crispEdges"
+      style={{ position: 'absolute', pointerEvents: 'none', ...style }}
+    >
+      {petals.map(([x, y], i) => (
+        <rect key={i} x={x} y={y} width={p} height={p} fill={color} />
+      ))}
+      <rect x={2} y={1} width={3} height={1} fill={color} />
+      <rect x={1} y={2} width={5} height={2} fill={color} />
+      <rect x={2} y={4} width={3} height={1} fill={color} />
+      <rect x={3} y={2} width={1} height={1} fill={center} />
+      <rect x={2} y={3} width={1} height={1} fill={center} />
+      <rect x={4} y={3} width={1} height={1} fill={center} />
+    </svg>
   )
 }
 
