@@ -231,7 +231,7 @@ export default function AndiGift() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: '#05060c', overflow: 'hidden', fontFamily: 'Georgia, serif' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel+Decorative:wght@400;700&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
         @keyframes andi-twinkle {
           0%,100% { opacity: var(--minop); transform: scale(1); }
           50% { opacity: 1; transform: scale(1.3); }
@@ -272,12 +272,12 @@ export default function AndiGift() {
         /* ===== DESKTOP (default, >900px): wide canvas, text wraps around floated photos ===== */
         .andi-letter { padding: 90px 10vw 140px; max-width: 900px; }
         .andi-imgSlot-float { width: 230px; }
-        .andi-body-text { font-size: 1.4rem; text-align: left; font-family: 'Caveat', cursive; color: #2b2115; }
-        .andi-dropcap { font-size: 5.6rem; }
-        .andi-title { font-size: clamp(2.6rem, 4.2vw, 4rem); }
+        .andi-body-text { font-size: 1.55rem; text-align: left; font-family: 'VT323', monospace; color: #2b2140; }
+        .andi-dropcap { font-size: 4.4rem; }
+        .andi-title { font-size: clamp(1.4rem, 2.6vw, 2.1rem); }
 
-        .andi-float-left { margin: 6px 34px 20px 0; }
-        .andi-float-right { margin: 6px 0 20px 34px; }
+        .andi-float-left { margin: 6px 34px 20px 0; float: left; }
+        .andi-float-right { margin: 6px 0 20px 34px; float: right; }
         .andi-header { text-align: left; }
         .andi-header-rule { margin-left: 0; }
 
@@ -285,8 +285,8 @@ export default function AndiGift() {
         @media (max-width: 900px) {
           .andi-letter { padding: 60px 7vw 130px; max-width: 640px; }
           .andi-imgSlot-float { width: 160px; }
-          .andi-body-text { font-size: 1.25rem; }
-          .andi-dropcap { font-size: 4.6rem; }
+          .andi-body-text { font-size: 1.35rem; }
+          .andi-dropcap { font-size: 3.6rem; }
           .andi-float-left { margin: 4px 22px 16px 0; }
           .andi-float-right { margin: 4px 0 16px 22px; }
         }
@@ -295,9 +295,9 @@ export default function AndiGift() {
         @media (max-width: 640px) {
           .andi-letter { padding: 44px 7vw 160px; max-width: 100%; }
           .andi-imgSlot-float { width: 42vw; max-width: 165px; }
-          .andi-body-text { font-size: 1.08rem; line-height: 1.75; text-align: left; }
-          .andi-dropcap { font-size: 3.4rem; float: none; display: block; margin: 0 0 4px; }
-          .andi-title { font-size: clamp(2rem, 9vw, 2.6rem); }
+          .andi-body-text { font-size: 1.2rem; line-height: 1.6; text-align: left; }
+          .andi-dropcap { font-size: 2.6rem; float: none; display: block; margin: 0 0 4px; }
+          .andi-title { font-size: clamp(1.1rem, 6vw, 1.5rem); }
           .andi-float-left { margin: 4px 14px 14px 0; }
           .andi-float-right { margin: 4px 0 14px 14px; }
           .andi-header { text-align: center; }
@@ -341,53 +341,47 @@ export default function AndiGift() {
         }
         .andi-toolbar-btn:active { transform: scale(0.94); }
 
-        /* ===== realistic aged-paper letter, on a dark desk ===== */
+        /* ===== pixel-art letter, retro game dialogue box style ===== */
         .andi-stage {
           background:
-            radial-gradient(ellipse at 50% 0%, rgba(90,70,50,0.5), transparent 60%),
-            linear-gradient(160deg, #241a12 0%, #16110c 55%, #0d0a07 100%);
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 4px),
+            radial-gradient(ellipse at 50% 0%, #241a3d 0%, transparent 60%),
+            linear-gradient(160deg, #140f24 0%, #0c0918 55%, #08060f 100%);
+          image-rendering: pixelated;
         }
         .andi-desk-scrap {
           position: fixed;
           pointer-events: none;
           z-index: 1;
-          opacity: 0.25;
-          background: repeating-linear-gradient(0deg, #3a2f22 0px, #3a2f22 1px, transparent 1px, transparent 9px);
-          filter: blur(0.2px);
+          opacity: 0.5;
+          background: repeating-linear-gradient(90deg, #ffd257 0px, #ffd257 6px, transparent 6px, transparent 12px);
+          box-shadow: 0 0 0 4px #241a3d;
         }
-        .andi-desk-scrap-1 { width: 260px; height: 340px; top: -40px; left: -60px; transform: rotate(-12deg); border-radius: 3px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .andi-desk-scrap-2 { width: 220px; height: 300px; bottom: -60px; right: -50px; transform: rotate(9deg); border-radius: 3px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .andi-desk-scrap-1 { width: 40px; height: 40px; top: 40px; left: 40px; transform: rotate(0deg); }
+        .andi-desk-scrap-2 { width: 28px; height: 28px; bottom: 60px; right: 60px; transform: rotate(0deg); background: repeating-linear-gradient(90deg, #6ee7ff 0px, #6ee7ff 5px, transparent 5px, transparent 10px); }
 
         .andi-paper {
           position: relative;
           z-index: 7;
           max-width: 900px;
           margin: 70px auto 90px;
-          background:
-            radial-gradient(ellipse at 20% 15%, rgba(255,255,255,0.5), transparent 40%),
-            radial-gradient(ellipse at 80% 85%, rgba(120,95,60,0.15), transparent 45%),
-            linear-gradient(172deg, #f4ecd8 0%, #ecdfc0 40%, #e6d5ac 75%, #ded0a4 100%);
-          box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3), inset 0 0 60px rgba(120,90,50,0.12);
-          transform: rotate(-0.5deg);
+          background: #fdf3e0;
+          image-rendering: pixelated;
+          box-shadow:
+            0 0 0 4px #2b2140,
+            0 0 0 8px #fdf3e0,
+            0 0 0 12px #2b2140,
+            10px 10px 0 12px rgba(0,0,0,0.35);
           clip-path: polygon(
-            0.5% 2%, 4% 0%, 9% 1.2%, 15% 0.3%, 22% 1%, 30% 0%, 38% 0.8%, 47% 0.1%, 55% 1%, 63% 0.2%, 71% 1.1%, 80% 0.2%, 88% 1%, 94% 0.1%, 99.5% 1.5%,
-            99% 8%, 100% 18%, 99.3% 30%, 100% 45%, 99.4% 60%, 100% 75%, 99.2% 88%, 100% 97%,
-            94% 99.3%, 87% 98.3%, 79% 99.6%, 70% 98.6%, 61% 99.7%, 52% 98.5%, 43% 99.6%, 34% 98.4%, 25% 99.5%, 16% 98.3%, 8% 99.5%, 2% 98.2%,
-            0.8% 90%, 0% 78%, 0.7% 65%, 0% 50%, 0.6% 36%, 0% 22%, 0.8% 12%
+            0 18px, 18px 18px, 18px 0,
+            calc(100% - 18px) 0, calc(100% - 18px) 18px, 100% 18px,
+            100% calc(100% - 18px), calc(100% - 18px) calc(100% - 18px), calc(100% - 18px) 100%,
+            18px 100%, 18px calc(100% - 18px), 0 calc(100% - 18px)
           );
         }
-        .andi-stain {
-          position: absolute;
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 1;
-          mix-blend-mode: multiply;
-        }
-        .andi-stain-1 { width: 160px; height: 130px; top: 6%; right: 8%; background: radial-gradient(ellipse, rgba(150,60,50,0.16), transparent 70%); }
-        .andi-stain-2 { width: 130px; height: 110px; bottom: 10%; left: 5%; background: radial-gradient(ellipse, rgba(120,90,40,0.16), transparent 70%); }
-        .andi-stain-3 { width: 90px; height: 80px; bottom: 30%; right: 20%; background: radial-gradient(ellipse, rgba(150,60,50,0.12), transparent 70%); }
+        .andi-stain { display: none; }
         @media (max-width: 640px) {
-          .andi-paper { margin: 40px 10px 70px; }
+          .andi-paper { margin: 40px 8px 60px; }
         }
         @media (max-width: 640px) {
           .andi-toolbar { bottom: 12px; gap: 6px; padding: 7px 8px; }
@@ -432,13 +426,14 @@ export default function AndiGift() {
         />
         <h1
           style={{
-            fontFamily: "'Cinzel Decorative', serif",
-            fontSize: 'clamp(2rem, 7vw, 3.6rem)',
-            fontWeight: 700,
-            margin: '0 0 14px 0',
-            letterSpacing: '0.04em',
-            textShadow: '0 0 24px rgba(246,242,231,0.35), 0 0 2px rgba(246,242,231,0.6)',
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: 'clamp(1.1rem, 5vw, 2rem)',
+            fontWeight: 400,
+            margin: '0 0 18px 0',
+            letterSpacing: '0.02em',
+            textShadow: '3px 3px 0 #ff6b81',
             minHeight: '1.2em',
+            lineHeight: 1.6,
           }}
         >
           {typed}
@@ -446,8 +441,8 @@ export default function AndiGift() {
         </h1>
         <p
           style={{
-            fontFamily: "'Caveat', cursive",
-            fontSize: 'clamp(1.3rem, 4vw, 1.9rem)',
+            fontFamily: "'VT323', monospace",
+            fontSize: 'clamp(1.3rem, 4vw, 1.7rem)',
             letterSpacing: '0.02em',
             color: '#c9c3b4',
             margin: '0 0 60px 0',
@@ -462,22 +457,23 @@ export default function AndiGift() {
           className="andi-btn"
           onClick={openNote}
           style={{
-            fontFamily: "'Caveat', cursive",
-            fontWeight: 700,
-            fontSize: '1.4rem',
-            padding: '16px 38px',
-            borderRadius: 50,
-            border: '1px solid rgba(246,242,231,0.5)',
-            background: 'rgba(246,242,231,0.06)',
-            color: '#f6f2e7',
+            fontFamily: "'Press Start 2P', monospace",
+            fontWeight: 400,
+            fontSize: '0.85rem',
+            padding: '18px 30px',
+            borderRadius: 0,
+            border: 'none',
+            background: '#ff6b81',
+            color: '#fdf3e0',
             cursor: 'pointer',
-            letterSpacing: '0.04em',
-            transition: 'background 0.3s, transform 0.15s, box-shadow 0.3s',
+            letterSpacing: '0.02em',
+            boxShadow: '0 0 0 3px #2b2140, 0 0 0 6px #fdf3e0, 0 0 0 9px #2b2140, 6px 6px 0 9px rgba(0,0,0,0.4)',
+            transition: 'transform 0.1s',
           }}
         >
-          click me ✦
+          click me
         </button>
-        <div style={{ marginTop: 14, fontSize: '0.75rem', color: '#8b8474', letterSpacing: '0.05em' }}>
+        <div style={{ marginTop: 20, fontSize: '0.7rem', fontFamily: "'VT323', monospace", color: '#8b8474', letterSpacing: '0.05em' }}>
           (go on, tap it)
         </div>
       </div>
@@ -501,7 +497,7 @@ export default function AndiGift() {
           <div className="andi-desk-scrap andi-desk-scrap-1" />
           <div className="andi-desk-scrap andi-desk-scrap-2" />
 
-          {/* wax-seal close button */}
+          {/* pixel close button */}
           <button
             onClick={closeNote}
             aria-label="close"
@@ -509,20 +505,24 @@ export default function AndiGift() {
               position: 'fixed',
               top: 22,
               right: 22,
-              width: 44,
-              height: 44,
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 35% 30%, #8a3b2e, #5c2018)',
-              border: '2px solid rgba(43,28,16,0.4)',
-              color: '#f1e4c3',
-              fontSize: '1.2rem',
-              fontFamily: "'Cinzel Decorative', serif",
+              width: 40,
+              height: 40,
+              borderRadius: 0,
+              background: '#ff6b81',
+              border: 'none',
+              boxShadow: '0 0 0 3px #2b2140, 0 0 0 6px #fdf3e0, 0 0 0 9px #2b2140',
+              color: '#fdf3e0',
+              fontSize: '1.1rem',
+              fontFamily: "'Press Start 2P', monospace",
               cursor: 'pointer',
               zIndex: 20,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.45)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 0,
             }}
           >
-            ✕
+            X
           </button>
 
           <div className="andi-paper">
@@ -539,25 +539,25 @@ export default function AndiGift() {
               }}
               className="andi-header"
             >
-              <div className="andi-header-stars" style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6 }}>✦ ✦ ✦</div>
+              <div className="andi-header-stars" style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6, color: '#2b2140' }}>✦ ✦ ✦</div>
               <img
                 src="/celebrate.gif"
                 alt="celebrating penguin"
                 className="andi-celebrate-gif"
-                style={{ width: 90, marginBottom: 6 }}
+                style={{ width: 90, marginBottom: 10, imageRendering: 'pixelated' }}
               />
-              <h2 className="andi-title" style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, margin: '0 0 10px 0' }}>
+              <h2 className="andi-title" style={{ fontFamily: "'Press Start 2P', monospace", fontWeight: 400, margin: '0 0 16px 0', color: '#2b2140', textShadow: '3px 3px 0 #ffd257' }}>
                 for andi
               </h2>
-              <div className="andi-header-rule" style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 0 50px' }} />
+              <div className="andi-header-rule" style={{ width: 160, height: 6, background: 'repeating-linear-gradient(90deg, #2b2140 0px, #2b2140 8px, transparent 8px, transparent 16px)', margin: '0 0 50px' }} />
             </div>
 
             {/* letter body — one continuous flow of text, photos floated inline so text wraps around them */}
             <div
               className="andi-flow"
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                lineHeight: 1.9,
+                fontFamily: "'VT323', monospace",
+                lineHeight: 1.5,
                 animation: unroll ? 'andi-riseIn 0.9s ease 0.55s both' : 'none',
                 opacity: unroll ? undefined : 0,
               }}
@@ -565,11 +565,11 @@ export default function AndiGift() {
               <span
                 className="andi-dropcap"
                 style={{
-                  fontFamily: "'Cinzel Decorative', serif",
+                  fontFamily: "'Press Start 2P', monospace",
                   float: 'left',
                   lineHeight: 0.8,
-                  padding: '8px 10px 0 0',
-                  color: '#8a3b2e',
+                  padding: '10px 14px 6px 0',
+                  color: '#ff6b81',
                 }}
               >
                 H
@@ -649,11 +649,12 @@ export default function AndiGift() {
                 suppressContentEditableWarning
                 spellCheck={false}
                 style={{
-                  fontFamily: "'Caveat', cursive",
+                  fontFamily: "'VT323', monospace",
                   fontWeight: 700,
                   textAlign: 'right',
-                  fontSize: '2rem',
-                  opacity: 0.85,
+                  fontSize: '2.2rem',
+                  color: '#2b2140',
+                  opacity: 0.9,
                   outline: 'none',
                   animation: unroll ? 'andi-riseIn 0.9s ease 0.75s both' : 'none',
                 }}
@@ -675,29 +676,29 @@ function Polaroid({ slot, onFile, round, floatSide }) {
       className={`andi-imgSlot andi-imgSlot-float ${floatSide === 'left' ? 'andi-float-left' : floatSide === 'right' ? 'andi-float-right' : ''}`}
       style={{
         display: 'block',
-        background: '#fdfaf2',
-        padding: round ? 10 : '10px 10px 26px 10px',
-        borderRadius: round ? '50%' : 3,
-        boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
-        transform: `rotate(${slot.rot}deg)`,
+        background: '#fdf3e0',
+        padding: 8,
+        borderRadius: 0,
+        boxShadow: `0 0 0 4px #2b2140, 0 0 0 8px ${round ? '#6ee7ff' : '#ffd257'}, 6px 6px 0 8px rgba(0,0,0,0.3)`,
+        transform: 'none',
         cursor: 'pointer',
         position: 'relative',
-        transition: 'transform 0.2s',
-        float: floatSide === 'left' ? 'left' : floatSide === 'right' ? 'right' : 'none',
+        transition: 'transform 0.15s',
       }}
     >
       <div
         style={{
           width: '100%',
           aspectRatio: '1 / 1',
-          borderRadius: round ? '50%' : 2,
-          background: slot.img ? `url(${slot.img}) center/cover` : 'repeating-linear-gradient(45deg, #e7ddc4, #e7ddc4 8px, #ddd0ae 8px, #ddd0ae 16px)',
+          borderRadius: 0,
+          background: slot.img ? `url(${slot.img}) center/cover` : 'repeating-linear-gradient(45deg, #ecd9b0, #ecd9b0 8px, #ddc48a 8px, #ddc48a 16px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontFamily: "'Caveat', cursive",
-          color: 'rgba(43,28,16,0.5)',
-          fontSize: '1.1rem',
+          fontFamily: "'VT323', monospace",
+          color: 'rgba(43,28,16,0.6)',
+          fontSize: '1.3rem',
+          imageRendering: slot.img ? 'auto' : 'pixelated',
         }}
       >
         {!slot.img && <span>+ photo</span>}
