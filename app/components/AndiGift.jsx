@@ -624,15 +624,6 @@ export default function AndiGift() {
             </div>
             </div>
           </div>
-
-          <div className="andi-toolbar">
-            <button onClick={addSlot} className="andi-toolbar-btn">+ photo</button>
-            <button onClick={burstConfetti} className="andi-toolbar-btn">✦ burst</button>
-            <button onClick={replay} className="andi-toolbar-btn">↺ replay</button>
-            <button onClick={() => setHearts((h) => !h)} className="andi-toolbar-btn">
-              {hearts ? '♥ hearts on' : '♡ hearts off'}
-            </button>
-          </div>
         </div>
       )}
     </div>
