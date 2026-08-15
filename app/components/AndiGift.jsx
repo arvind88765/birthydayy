@@ -277,6 +277,8 @@ export default function AndiGift() {
 
         .andi-float-left { margin: 6px 34px 20px 0; }
         .andi-float-right { margin: 6px 0 20px 34px; }
+        .andi-header { text-align: left; }
+        .andi-header-rule { margin-left: 0; }
 
         /* ===== TABLET (≤900px) ===== */
         @media (max-width: 900px) {
@@ -297,6 +299,9 @@ export default function AndiGift() {
           .andi-title { font-size: clamp(2rem, 9vw, 2.6rem); }
           .andi-float-left { margin: 4px 14px 14px 0; }
           .andi-float-right { margin: 4px 0 14px 14px; }
+          .andi-header { text-align: center; }
+          .andi-header-stars { }
+          .andi-header-rule { margin: 0 auto; }
         }
 
         /* ===== floating toolbar: solid on mobile, never wraps ===== */
@@ -478,16 +483,16 @@ export default function AndiGift() {
           <div className="andi-letter" style={{ position: 'relative', zIndex: 7, maxWidth: 860, margin: '0 auto' }}>
             <div
               style={{
-                textAlign: 'center',
                 animation: unroll ? 'andi-riseIn 0.9s ease 0.35s both' : 'none',
                 opacity: unroll ? undefined : 0,
               }}
+              className="andi-header"
             >
-              <div style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6 }}>✦ ✦ ✦</div>
+              <div className="andi-header-stars" style={{ fontSize: '1.6rem', letterSpacing: '0.3em', opacity: 0.5, marginBottom: 6 }}>✦ ✦ ✦</div>
               <h2 className="andi-title" style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700, margin: '0 0 10px 0' }}>
                 for andi
               </h2>
-              <div style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 auto 50px' }} />
+              <div className="andi-header-rule" style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, #8a6a2f, transparent)', margin: '0 0 50px' }} />
             </div>
 
             {/* letter body — one continuous flow of text, photos floated inline so text wraps around them */}
@@ -513,7 +518,7 @@ export default function AndiGift() {
                 H
               </span>
 
-              {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} round floatSide="right" />}
+              {slots[0] && <Polaroid slot={slots[0]} onFile={(f) => handleFile(slots[0].id, f)} floatSide="right" />}
 
               <p
                 contentEditable
@@ -525,7 +530,7 @@ export default function AndiGift() {
                 {`ey andi, Just a little corner of the internet made for you.`}
               </p>
 
-              {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} floatSide="left" />}
+              {slots[1] && <Polaroid slot={slots[1]} onFile={(f) => handleFile(slots[1].id, f)} round floatSide="left" />}
 
               <p
                 contentEditable
